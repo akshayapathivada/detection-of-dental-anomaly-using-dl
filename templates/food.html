@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .logout-btn:hover {
+            background-color: #e53935;
+        }
+        .recommend-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .recommend-btn:hover {
+            background-color: #007bb5;
+        }
+        .uploaded-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <button class="logout-btn" onclick="window.location.href='/'">Logout</button>
+
+    <h1>Food Recommendations</h1>
+
+    <div class="container">
+        <!-- Display the uploaded image if available -->
+        {% if image_url %}
+            <img src="{{ url_for('static', filename='uploads/' + image_url) }}" class="uploaded-image" alt="Uploaded Image">
+        {% endif %}
+
+        <p id="food-recommendation">{{ recommendation | safe }}</p>
+
+        
+    </div>
+</body>
+</html>
