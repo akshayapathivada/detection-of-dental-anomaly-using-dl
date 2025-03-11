@@ -1,1 +1,194 @@
-te
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Dental Consultation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .doctor-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .doctor-card {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 48%;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .btn-book {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-book:hover {
+            background-color: #45a049;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 999;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+        .close-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .close-btn:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>DentiPro</h1>
+    <div class="container">
+        <h2>Recommended Doctors</h2>
+        <div class="doctor-list">
+            {% if recommended_doctors %}
+                {% for doctor in recommended_doctors %}
+                    <div class="doctor-card">
+                        <h3>Dr. {{ doctor.username }}</h3>
+                        <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+                        <p><strong>Hospital:</strong> {{ doctor.hospital_name }}</p>
+                        <p><strong>Phone:</strong> {{ doctor.phone }}</p>
+                        <p><strong>Email:</strong> {{ doctor.email }}</p>
+                        <p><strong>City:</strong> {{ doctor.city }}</p>
+                        <button class="btn-book" onclick="openConsultationForm('{{ doctor.id }}', '{{ doctor.username }}', '{{ doctor.hospital_name }}', '{{ doctor.phone }}', '{{ doctor.specialization }}')">
+                            Book Appointment
+                        </button>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No recommended doctors available for your condition.</p>
+            {% endif %}
+        </div>
+
+        <h2>All Doctors</h2>
+        <div class="doctor-list">
+            {% if other_doctors %}
+                {% for doctor in other_doctors %}
+                    <div class="doctor-card">
+                        <h3>Dr. {{ doctor.username }}</h3>
+                        <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+                        <p><strong>Hospital:</strong> {{ doctor.hospital_name }}</p>
+                        <p><strong>Phone:</strong> {{ doctor.phone }}</p>
+                        <p><strong>Email:</strong> {{ doctor.email }}</p>
+                        <p><strong>City:</strong> {{ doctor.city }}</p>
+                        <button class="btn-book" onclick="openConsultationForm('{{ doctor.id }}', '{{ doctor.username }}', '{{ doctor.hospital_name }}', '{{ doctor.phone }}', '{{ doctor.specialization }}')">
+                            Book Appointment
+                        </button>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No other doctors available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Consultation Booking Form Popup -->
+    <div class="form-popup" id="consultationForm">
+        <h2>Book Appointment</h2>
+        <form action="{{ url_for('book_appointment') }}" method="POST">
+
+            <input type="hidden" id="doctor_id" name="doctor_id">
+            <input type="hidden" id="patient_id" name="patient_id" value="{{ current_user.id }}">
+
+            <p><strong>Doctor:</strong> <span id="doctor_name"></span></p>
+            <p><strong>Hospital:</strong> <span id="hospital_name"></span></p>
+            <p><strong>Phone:</strong> <span id="doctor_phone"></span></p>
+            <p><strong>Specialization:</strong> <span id="doctor_specialization"></span></p>
+
+            <label for="patient_name">Your Name:</label>
+            <input type="text" id="patient_name" name="patient_name" required>
+            <br><br>
+
+            <label for="patient_email">Your Email:</label>
+            <input type="email" id="patient_email" name="patient_email" required>
+            <br><br>
+
+            <label for="patient_phone">Phone Number:</label>
+            <input type="text" id="patient_phone" name="patient_phone" pattern="[0-9]{10}" title="Phone number must be exactly 10 digits" required>
+            <br><br>
+
+            <label for="appointment_date">Preferred Date:</label>
+            <input type="date" id="appointment_date" name="appointment_date" required>
+            <br><br>
+
+            <label for="problem_description">Describe Your Problem:</label>
+            <textarea id="problem_description" name="problem_description" rows="4" required></textarea>
+            <br><br>
+
+            <p><strong>Status:</strong> Pending</p>
+
+            <button type="submit" class="btn-book">Confirm Booking</button>
+            <button type="button" class="close-btn" onclick="closeConsultationForm()">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        function openConsultationForm(doctorId, name, hospital, phone, specialization) {
+            document.getElementById("doctor_id").value = doctorId;
+            document.getElementById("doctor_name").innerText = name;
+            document.getElementById("hospital_name").innerText = hospital;
+            document.getElementById("doctor_phone").innerText = phone;
+            document.getElementById("doctor_specialization").innerText = specialization;
+
+            document.getElementById("consultationForm").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function closeConsultationForm() {
+            document.getElementById("consultationForm").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
