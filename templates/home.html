@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentiPro - Best Dental Service</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+<header class="header" data-header>
+    <nav class="navbar">
+        <a href="#" class="logo">.DentiPro</a>
+        <button class="nav-toggler" data-nav-toggler>&#9776;</button>
+        <ul class="nav-links">
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#services" class="nav-link">Services</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#doctors" class="nav-link">Doctors</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li><a href="{{ url_for('login') }}" class="nav-link login-btn">Login</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+    <!-- Hero Section -->
+<!-- Hero Section -->
+    <section class="hero" id="home">
+    <div class="container">
+        <div class="hero-content">
+            <p class="section-subtitle">Welcome To DentiPro</p>
+            <h1 class="hero-title">We Are Best Dental Service</h1>
+
+            <form action="#" class="hero-form">
+                <input type="email" name="email_address" placeholder="Your Email Address..." required class="email-field">
+                <button type="submit" class="btn">Get Call Back</button>
+            </form>
+        </div>
+         <figure class="hero-banner">
+                <img src="{{ url_for('static', filename='doctor1.png') }}" alt="hero banner">
+            </figure>
+        </div>
+    </section>
+
+
+
+
+
+    <!-- Service Section -->
+    <!-- Services Section -->
+    <section id="services" class="service">
+        <h2>Our Services</h2>
+        <div class="service-container">
+            <div class="service-card">
+                <img src="{{ url_for('static', filename='prediction.jpg') }}" alt="Disease Prediction">
+                <h3>Disease Prediction</h3>
+            </div>
+            <div class="service-card">
+                <img src="{{ url_for('static', filename='food.jpg') }}" alt="Food Recommendation">
+                <h3>Food Recommendation</h3>
+            </div>
+            <div class="service-card">
+                <img src="{{ url_for('static', filename='appointment.jpg') }}" alt="Doctor-Patient Appointment">
+                <h3>Doctor-Patient Appointment</h3>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section about" id="about" aria-label="about">
+    <div class="container">
+
+        <figure class="about-banner">
+            <img src="{{ url_for('static', filename='about-banner.png') }}" width="470" height="538" loading="lazy" alt="About Us Banner"
+                class="w-100">
+        </figure>
+
+        <div class="about-content">
+
+            <p class="section-subtitle">About Us</p>
+
+            <h2 class="h2 section-title">We Care For Your Dental Health</h2>
+
+            <p class="section-text section-text-1">
+                Our services include Disease Prediction to detect oral health issues early, Food Recommendations for strong and healthy teeth, and Doctor-Patient Appointments for hassle-free consultations with expert dentists. We also offer Personalized Oral Care Tips to maintain optimal dental hygiene, Treatment Guidance to help you choose the best solutions for your dental concerns, and Preventive Care to keep your smile healthy and bright. Your oral health is our priority!
+            </p>
+
+
+
+
+        </div>
+
+    </div>
+</section>
+<section class="doctor" id="doctors">
+  <div class="container">
+    <p class="section-subtitle">Meet Our Doctors</p>
+    <h2 class="section-title">Expert Dental Specialists</h2>
+
+    <div class="has-scrollbar">
+      <!-- Doctor 1 -->
+      <div class="doctor-card">
+        <figure class="card-banner">
+          <img src="{{ url_for('static', filename='doctor-2.png') }}" alt="Doctor 1">
+        </figure>
+        <h3 class="card-title">Dr. John Doe</h3>
+        <p class="card-subtitle">Orthodontist</p>
+      </div>
+
+      <!-- Doctor 2 -->
+      <div class="doctor-card">
+        <figure class="card-banner">
+          <img src="{{ url_for('static', filename='doctor-3.png') }}" alt="Doctor 2">
+        </figure>
+        <h3 class="card-title">Dr. Jane Smith</h3>
+        <p class="card-subtitle">Pediatric Dentist</p>
+      </div>
+
+      <!-- Doctor 3 -->
+      <div class="doctor-card">
+        <figure class="card-banner">
+          <img src="{{ url_for('static', filename='doctor-4.png') }}" alt="Doctor 3">
+        </figure>
+        <h3 class="card-title">Dr. Alex Brown</h3>
+        <p class="card-subtitle">Oral Surgeon</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <p>Have any questions? Feel free to reach out to us.</p>
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name">
+            <input type="email" placeholder="Your Email">
+            <textarea placeholder="Your Message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+
+<div class="check-teeth">
+    <a href="{{ url_for('index') }}" class="check-teeth-btn">Check Your Teeth</a>
+</div>
+
+
+
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Image Prediction</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #E6F2FF;
+            color: #333;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3399FF;
+        }
+
+        .header .buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header button {
+            background-color: transparent;
+            border: 2px solid #3399FF;
+            color: #3399FF;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .header button:hover {
+            background-color: #3399FF;
+            color: white;
+        }
+
+        .container {
+            margin-top: 50px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            display: inline-block;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3399FF;
+            font-size: 2.5rem;
+        }
+
+        label {
+            display: block;
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #3399FF;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            font-size: 1rem;
+        }
+
+        video {
+            display: none;
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        canvas {
+            display: none;
+        }
+
+        button.upload, button.capture {
+            background-color: #3399FF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        button.upload:hover, button.capture:hover {
+            background-color: #66B2FF;
+        }
+
+        .output {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .message {
+            margin-top: 30px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3399FF;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">.dentipro</div>
+        <div class="buttons">
+            <button onclick="window.location.href='/doctors'">List of Doctors</button>
+            <button onclick="window.location.href='/appointment_status'">Appointment Status</button>
+            <button onclick="showLoadingMessage()">Get Food Recommendation</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Dental Image Prediction</h1>
+        <form id="upload-form" enctype="multipart/form-data">
+            <label for="image">Upload an Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+            <br>
+
+            <p>OR</p>
+
+            <button type="button" onclick="openCamera()">Capture Image</button>
+            <video id="camera" class="hidden" autoplay></video>
+            <canvas id="canvas" class="hidden"></canvas>
+            <img id="captured-image" class="hidden" alt="Captured Image">
+
+            <br>
+            <button type="button" onclick="captureImage()">Take Picture</button>
+            <button type="button" onclick="uploadAndPredict()">Upload and Predict</button>
+        </form>
+        <div class="output" id="prediction-result"></div>
+    </div>
+
+    <div class="message">
+        New life begins with a confident smile 😁
+    </div>
+
+
+    <script>
+    let video = document.getElementById("camera");
+let canvas = document.getElementById("canvas");
+let capturedImage = document.getElementById("captured-image");
+let capturedFile = null;
+let stream = null; // Store the camera stream
+
+function openCamera() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(camStream => {
+            stream = camStream; // Store the stream for later use
+            video.srcObject = stream;
+            video.classList.remove("hidden");
+            capturedImage.classList.add("hidden"); // Hide captured image if previously taken
+            video.play();
+        })
+        .catch(error => alert("Camera access denied: " + error));
+}
+
+function captureImage() {
+    if (!stream) {
+        alert("Camera is not active. Please open the camera first.");
+        return;
+    }
+
+    // Ensure video dimensions are available
+    if (video.videoWidth === 0 || video.videoHeight === 0) {
+        alert("Camera is not ready yet. Please try again.");
+        return;
+    }
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    let context = canvas.getContext("2d");
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(blob => {
+        capturedFile = new File([blob], "captured-image.jpg", { type: "image/jpeg" });
+
+        // Stop the camera stream
+        stream.getTracks().forEach(track => track.stop());
+        stream = null; // Reset the stream
+
+        // Hide video and show the captured image
+        video.classList.add("hidden");
+        capturedImage.src = URL.createObjectURL(blob);
+        capturedImage.classList.remove("hidden");
+
+    }, "image/jpeg");
+}
+
+
+    function showLoadingMessage() {
+        let messageDiv = document.createElement("div");
+        messageDiv.id = "loading-message";
+        messageDiv.innerHTML = "<p style='font-size: 1.2rem; color: #008CBA;'>Please wait... Generating food recommendations.</p>";
+
+        messageDiv.style.position = "fixed";
+        messageDiv.style.top = "50%";
+        messageDiv.style.left = "50%";
+        messageDiv.style.transform = "translate(-50%, -50%)";
+        messageDiv.style.background = "#fff";
+        messageDiv.style.padding = "15px 20px";
+        messageDiv.style.borderRadius = "10px";
+        messageDiv.style.boxShadow = "0 4px 8px rgba(0,0,0,0.1)";
+
+        document.body.appendChild(messageDiv);
+
+        let button = document.querySelector(".header button:last-child");
+        if (button) {
+            button.innerText = "Processing...";
+            button.disabled = true;
+        }
+
+        setTimeout(() => {
+            window.location.href = "/recommendation";
+        }, 500);
+    }
+
+
+    async function uploadAndPredict() {
+    const form = document.getElementById('upload-form');
+    const fileInput = document.getElementById('image');
+    const predictionResult = document.getElementById('prediction-result');
+
+    let formData = new FormData();
+
+    // Check if an image is selected or captured
+    if (fileInput.files.length > 0) {
+        formData.append("image", fileInput.files[0]); // Use uploaded image
+    } else if (capturedFile) {
+        formData.append("image", capturedFile); // Use captured image
+    } else {
+        alert("Please select or capture an image before predicting.");
+        return;
+    }
+
+    // Display loading message
+    predictionResult.innerHTML = "<p style='color: blue;'>Processing... Please wait.</p>";
+
+    try {
+        const response = await fetch('/predict', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        const prediction = result.predicted_class;
+
+        // Mapping predictions to their descriptions
+        const predictionInfo = {
+            "Hypodontia": "A condition where one or more teeth fail to develop. It commonly affects incisors and premolars, leading to gaps in the dental arch and potential speech or chewing difficulties.",
+            "Cavities (Dental Caries)": "Tooth decay caused by bacterial activity, often leading to dark spots or holes. If untreated, it can result in pain and infection.",
+            "Gingivitis": "Inflammation of the gums that can lead to bleeding, bad breath, and in severe cases, tooth loss due to damage to the surrounding bone.",
+            "Tooth Fracture": "A break or crack in a tooth, often due to trauma or pressure from grinding. It can cause sensitivity and pain while eating.",
+            "Plaque and Tartar Build-up": "Hardened deposits of bacteria on teeth that can lead to cavities and gum disease. Regular brushing and professional cleanings help prevent this.",
+            "Tooth Discoloration": "A condition where teeth lose their natural color due to staining, aging, or certain medications. Whitening treatments or professional cleaning can help restore brightness.",
+            "Ulcers": "Painful sores that can develop inside the mouth due to stress, irritation, or underlying health conditions. Maintaining good oral hygiene and using medicated gels can help relieve discomfort."
+        };
+
+        const nextStepMessage = `
+            <br><br>
+            💡 <strong>Next Step:</strong><br>
+            👉 To get expert advice and treatment, <strong>book an appointment</strong> with a doctor.<br>
+            🔹 Click the <strong>"List of Doctors"</strong> button in the top right corner to choose a specialist.
+        `;
+
+        // Normalize prediction to handle case sensitivity and trimming
+        const normalizedPrediction = prediction.trim().toLowerCase();
+        const matchedKey = Object.keys(predictionInfo).find(
+            key => key.toLowerCase() === normalizedPrediction
+        );
+
+        // Update the prediction result **without clearing the image**
+        if (matchedKey) {
+            predictionResult.innerHTML = `
+                <strong>Prediction: ${matchedKey}</strong><br><br>
+                ${predictionInfo[matchedKey]}
+                ${nextStepMessage}
+            `;
+        } else {
+            predictionResult.innerHTML = `Prediction: ${prediction}`;
+        }
+
+    } catch (error) {
+        predictionResult.textContent = `Error: ${error.message}`;
+    }
+}
+
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
