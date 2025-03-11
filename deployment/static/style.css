@@ -1,1 +1,431 @@
+* Navbar */
+.header {
+    background-color: #0077b6;
+    padding: 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.logo {
+    color: #fff;
+    font-size: 32px;  /* Increased font size */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;  /* Increased spacing */
+}
+
+.nav-links .nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;  /* Increased font size */
+    padding: 14px 20px;
+    transition: 0.3s ease-in-out;
+    border-radius: 8px;
+}
+
+.nav-links .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-toggler {
+    display: none;
+    font-size: 28px;  /* Increased icon size */
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: #0077b6;
+        position: absolute;
+        top: 70px;
+        right: 10px;
+        width: 220px;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-toggler {
+        display: block;
+    }
+}
+
+/* Hero Section */
+/* Hero Section */
+/* Hero Section */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 10%; /* Reduced padding */
+    background-color: #eef7ff;
+    min-height: 80vh;
+}
+
+/* Container to align items horizontally */
+.hero .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Left Content */
+.hero-content {
+    flex: 1;
+    max-width: 50%;
+    text-align: left;
+}
+
+/* Subtitle */
+.section-subtitle {
+    font-size: 2rem; /* Increased font size */
+    font-weight: bold;
+    color: #0077b6;
+    margin-bottom: 8px; /* Reduced margin */
+}
+
+/* Main Title */
+.hero-title {
+    font-size: 4rem; /* Increased font size */
+    font-weight: bold;
+    color: #023e8a;
+    margin-bottom: 10px; /* Reduced gap */
+    line-height: 1.2; /* Reduced line height */
+}
+
+/* Form */
+.hero-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.email-field {
+    padding: 12px;
+    border: 2px solid #0077b6;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    flex: 1;
+}
+
+.btn {
+    background-color: #0077b6;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #023e8a;
+}
+
+/* Right Image */
+.hero-banner {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-banner img {
+    max-width: 400px;
+    height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-banner {
+        margin-top: 20px;
+    }
+
+    .hero-title {
+        font-size: 3rem; /* Adjusted for smaller screens */
+    }
+
+    .section-subtitle {
+        font-size: 1.8rem;
+    }
+}
+
+/* Services Section */
+/* Services Section */
+.service {
+            padding: 60px 10%;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .service-container {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .service-card {
+            background: #eef7ff;
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .service-card img {
+            width: 193px;
+            height: 193px;
+            border-radius: 10px;
+        }
+
+        .service-card:hover {
+            transform: scale(1.05);
+        }
+
+.about .container {
+    display: flex;
+    align-items: center; /* Aligns content vertically */
+    justify-content: space-between; /* Creates space between image and text */
+    flex-wrap: wrap; /* Ensures responsiveness on smaller screens */
+}
+
+.about-banner {
+    flex: 1; /* Takes up equal space */
+    max-width: 50%; /* Limits width */
+}
+
+.about-content {
+    flex: 1; /* Takes up equal space */
+    max-width: 50%; /* Limits width */
+    padding-left: 20px; /* Adds some space between image and text */
+}
+
+/* Ensure responsiveness */
+@media (max-width: 768px) {
+    .about .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .about-banner, .about-content {
+        max-width: 100%;
+        padding: 0;
+    }
+}
+/* Center the section title */
+/* Center the section title */
+.doctor {
+  text-align: center; /* Centers all text inside the doctor section */
+  max-width: 1200px; /* Ensures enough space for multiple cards */
+  margin: 0 auto; /* Centers the section */
+  padding: 20px;
+}
+
+/* Center the section subtitle and title */
+.doctor .section-subtitle,
+.doctor .section-title {
+  text-align: center; /* Ensures text remains centered */
+  margin: 0 auto;
+  margin-block-end: 50px;
+}
+
+/* Doctor cards container (FIXED) */
+.has-scrollbar {
+  display: flex;
+  flex-wrap: wrap; /* Allows cards to stay in one row, wrap if needed */
+  justify-content: center; /* Centers the doctor cards */
+  align-items: stretch; /* Ensures equal height for cards */
+  gap: 30px; /* Space between cards */
+  padding: 20px; /* Adds padding for better spacing */
+  overflow-x: hidden; /* Prevents unnecessary horizontal scrolling */
+}
+
+/* Doctor card styles */
+.doctor-card {
+  width: calc(33.33% - 30px); /* Each card takes 1/3 of the row with gap */
+  max-width: 300px; /* Prevents card from being too big */
+  min-height: 100%;
+  padding: 30px;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-4);
+  text-align: center;
+  flex: 1 1 300px; /* Ensures proper wrapping on smaller screens */
+}
+
+/* Doctor card image */
+.doctor-card .card-banner img {
+  width: 100%; /* Ensures image fills the card */
+  height: auto; /* Maintains aspect ratio */
+  border-radius: var(--radius-4);
+  display: block;
+}
+
+/* Doctor name styling */
+.doctor-card .card-title {
+  font-size: var(--fs-4);
+  transition: var(--transition);
+}
+
+/* Change doctor name color on hover */
+.doctor-card:is(:hover, :focus-within) .card-title {
+  color: var(--royal-blue-light);
+}
+
+/* Subtitle for doctor specialization */
+.doctor-card .card-subtitle {
+  color: var(--royal-blue-light);
+  margin-block: 10px 15px;
+}
+
+/* Social media icons styling */
+.doctor-card .card-social-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Social media link buttons */
+.doctor-card .card-social-link {
+  background-color: var(--lavender-web);
+  color: var(--royal-blue-light);
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+/* Social media icon hover effect */
+.doctor-card .card-social-link:is(:hover, :focus) {
+  background-color: var(--royal-blue-light);
+  color: var(--white);
+}
+.contact {
+            background-color: #0077b6;
+            color: white;
+            padding: 60px 10%;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .contact p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .contact-form textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        .contact-form button {
+            background-color: #023e8a;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #0056b3;
+        }
+
+.check-teeth {
+  text-align: center; /* Center the button */
+  margin-top: 20px;
+}
+
+.check-teeth-btn {
+  display: inline-block;
+  background-color: #003366; /* Dark blue color */
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.check-teeth-btn:hover {
+  background-color: #002255; /* Slightly darker blue on hover */
+}
+.login-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+}
