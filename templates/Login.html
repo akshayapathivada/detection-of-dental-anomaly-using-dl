@@ -1,1 +1,165 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='background2.jpg') }}") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .header {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4682B4;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .login-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .login-card h2 {
+            margin-bottom: 20px;
+            color: #4682B4;
+        }
+        .login-card form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .input-container {
+            position: relative;
+        }
+        .login-card input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .login-card button {
+            padding: 10px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #4682B4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .login-card button:hover {
+            background-color: #3A6A94;
+        }
+        .register-link {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        .register-link a {
+            color: #4682B4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+        .flash-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">DentiPro</div>
+    <div class="container">
+        <!-- Patient Login -->
+        <div class="login-card">
+            <h2>Patient Login</h2>
+            <form action="{{ url_for('login') }}" method="POST" onsubmit="return validateLoginForm('patient')">
+                <input type="hidden" name="login_type" value="Patient">
+                <input type="text" id="patient_username" name="username" placeholder="Username" required autocomplete="off">
+                <div class="input-container">
+                    <input type="password" id="patient_password" name="password" placeholder="Password" required autocomplete="off">
+                    <span class="toggle-password" onclick="togglePassword('patient_password')">👁️</span>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'error_patient' %}
+                            <p class="flash-message">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <p class="register-link">Don't have an account? <a href="{{ url_for('register_patient') }}">Register here</a></p>
+        </div>
+
+        <!-- Doctor Login -->
+        <div class="login-card">
+            <h2>Doctor Login</h2>
+            <form action="{{ url_for('login') }}" method="POST" onsubmit="return validateLoginForm('doctor')">
+                <input type="hidden" name="login_type" value="Doctor">
+                <input type="text" id="doctor_username" name="username" placeholder="Username" required autocomplete="off">
+                <div class="input-container">
+                    <input type="password" id="doctor_password" name="password" placeholder="Password" required autocomplete="off">
+                    <span class="toggle-password" onclick="togglePassword('doctor_password')">👁️</span>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'error_doctor' %}
+                            <p class="flash-message">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <p class="register-link">Don't have an account? <a href="{{ url_for('register_doctor') }}">Register here</a></p>
+        </div>
+    </div>
+    <script>
+        function togglePassword(inputId) {
+            let passwordInput = document.getElementById(inputId);
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>
