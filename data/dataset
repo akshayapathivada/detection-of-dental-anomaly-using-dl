@@ -1,1 +1,21 @@
+Data Collection:
+The dataset is obtained from [source name/Kaggle/etc.]. It contains images related to various dental diseases. The dataset is categorized into different classes based on common dental conditions.  
 
+Dataset Details:
+Total Number of Images:63002
+Image Size:224×224
+
+Dental Disease Classes & Definitions:
+The dataset consists of different classes representing various dental conditions, categorized as follows:  
+
+1. Gingivitis: Inflammation of the gums, often leading to swelling, redness, and bleeding.  
+2. Hypodontia: A condition where a person has missing teeth due to genetic factors.  
+3. Tooth Discoloration: Staining or yellowing of teeth due to food, smoking, or medical conditions.  
+4. Ulcers: Painful sores inside the mouth caused by infections, stress, or injuries.  
+📂 Dataset Structure
+The dataset is organized into multiple subfolders based on dental disease categories.  
+
+- Original Dataset Size: Included duplicate and misclassified images.  
+- Filtered Dataset Size: Unique images after removing duplicates and refining the dataset.  
+📌 Refined Dataset Link:
+https://drive.google.com/drive/folders/1Kv-COEzUv9POtdoEmicE1wAOGarElo5l?usp=sharing
