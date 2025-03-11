@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentiPro - Appointment Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .logout-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .logout-btn:hover {
+            background-color: darkred;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .appointment-card {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        .status {
+            font-weight: bold;
+            padding: 5px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .pending { background-color: orange; color: white; }
+        .confirmed { background-color: green; color: white; }
+        .canceled { background-color: red; color: white; }
+        .status-message {
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
 
+    <div class="header">
+        <h1>DentiPro</h1>
+        <button class="logout-btn" onclick="window.location.href='/logout'">Logout</button>
+    </div>
+
+    <div class="container">
+        <h1>Appointment Status</h1>
+        {% for appointment in appointments %}
+            <div class="appointment-card">
+                <p><strong>Doctor:</strong> {{ appointment.doctor_name }}</p>
+                <p><strong>Appointment Date:</strong> {{ appointment.date }}</p>
+                <p><strong>Status:</strong>
+                    <span class="status {% if appointment.status == 'Pending' %}pending{% elif appointment.status == 'Confirmed' %}confirmed{% elif appointment.status == 'Canceled' %}canceled{% endif %}">
+                        {{ appointment.status }}
+                    </span>
+                </p>
+                <p class="status-message">
+                    {% if appointment.status == 'Pending' %}
+                        Your appointment is under review. Please wait for confirmation from the doctor.
+                    {% elif appointment.status == 'Confirmed' %}
+                        Your appointment has been successfully confirmed. Please be available at the scheduled time.
+                    {% elif appointment.status == 'Canceled' %}
+                        Your appointment was canceled. Please book a new appointment if needed.
+                    {% endif %}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
