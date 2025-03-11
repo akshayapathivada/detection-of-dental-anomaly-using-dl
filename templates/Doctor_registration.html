@@ -1,1 +1,114 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #007acc;
+            margin-bottom: 20px;
+            padding-top: 20px; /* Added padding to avoid cutting */
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+        .container h2 {
+            color: #007acc;
+            margin-bottom: 20px;
+        }
+        .container form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .container input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .container button {
+            padding: 10px;
+            font-size: 1rem;
+            color: white;
+            background-color: #007acc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #005a99;
+        }
+        .login-link {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        .login-link a {
+            color: #007acc;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">DentiPro</div> <!-- Title at the top with padding to fix cut-off issue -->
+
+    <div class="container">
+        <h2>Doctor Registration</h2>
+        <form action="/register_doctor" method="POST">
+    <input type="text" name="fullname" placeholder="Full Name" required autocomplete="off"
+           pattern="[A-Za-z\s]{3,30}" title="Full name should be 3-30 characters long and contain only letters and spaces.">
+
+    <input type="email" name="email" placeholder="Email" required autocomplete="off">
+
+    <input type="text" name="username" placeholder="Username" required autocomplete="off"
+           pattern="[A-Za-z0-9]{3,15}" title="Username should be 3-15 characters long and contain only letters and numbers.">
+
+    <input type="password" name="password" placeholder="Password" required autocomplete="off"
+           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+           title="Password must be at least 6 characters long and contain at least one letter and one number.">
+
+    <input type="text" name="phone" placeholder="Phone Number" required autocomplete="off"
+           pattern="\d{10}" title="Phone number must be exactly 10 digits.">
+
+    <input type="text" name="specialization" placeholder="Specialization" required autocomplete="off"
+           pattern="[A-Za-z\s]{3,50}" title="Specialization should be at least 3 characters long and contain only letters.">
+
+    <input type="text" name="city" placeholder="City" required autocomplete="off"
+           pattern="[A-Za-z\s]{3,50}" title="City should be at least 3 characters long and contain only letters.">
+
+    <input type="text" name="hospital_name" placeholder="Hospital" required autocomplete="off"
+           pattern="[A-Za-z\s]{3,50}" title="Hospital name should be at least 3 characters long and contain only letters.">
+
+    <button type="submit">Register</button>
+</form>
+
+        <p class="login-link">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+    </div>
+
+</body>
+</html>
