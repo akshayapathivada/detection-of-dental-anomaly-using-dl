@@ -1,1 +1,135 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Appointments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            color: #4682B4;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .logout-btn {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .logout-btn:hover {
+            background-color: #c9302c;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .appointment-list {
+            margin-top: 20px;
+        }
+        .appointment-card {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        .status-btn {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .confirm-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .confirm-btn:hover {
+            background-color: #45a049;
+        }
+        .cancel-btn {
+            background-color: #d9534f;
+            color: white;
+        }
+        .cancel-btn:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>DentiPro</h1>
+        <button class="logout-btn" onclick="location.href='{{ url_for('logout') }}'">Logout</button>
+    </div>
+
+    <h2>My Appointments</h2>
+    <div class="container">
+        <div class="appointment-list">
+            {% for appointment in appointments %}
+                <div class="appointment-card">
+                    <p><strong>Patient Name:</strong> {{ appointment.patient_name }}</p>
+                    <p><strong>Email:</strong> {{ appointment.patient_email }}</p>
+                    <p><strong>Phone:</strong> {{ appointment.patient_phone }}</p>
+                    <p><strong>Problem:</strong> {{ appointment.problem_description }}</p>
+                    <p><strong>Appointment Date:</strong> {{ appointment.date }}</p>
+                    <p><strong>Status:</strong> {{ appointment.status }}</p>
+
+                    {% if appointment.status == "Pending" %}
+                        <button class="status-btn confirm-btn" onclick="updateStatus('{{ appointment.id }}', 'confirm')">Confirm</button>
+                        <button class="status-btn cancel-btn" onclick="updateStatus('{{ appointment.id }}', 'cancel')">Cancel</button>
+                    {% else %}
+                        <p><strong>Final Status:</strong> {{ appointment.status }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function updateStatus(appointmentId, action) {
+            fetch(`/update_status/${appointmentId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: action })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Appointment status updated to '" + action + "'");
+                    location.reload();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
