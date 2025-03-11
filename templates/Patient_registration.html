@@ -1,1 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
+        /* Title Styling */
+        .title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4682B4;
+            margin-bottom: 20px;
+        }
+
+        .register-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        .register-card h2 {
+            margin-bottom: 20px;
+            color: #4682B4;
+        }
+        .register-card form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .register-card input, .register-card select {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .register-card button {
+            padding: 10px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #4682B4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .register-card button:hover {
+            background-color: #3A6A94;
+        }
+        .login-link {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        .login-link a {
+            color: #4682B4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- DentiPro Title -->
+    <div class="title">DentiPro</div>
+
+    <div class="register-card">
+        <h2>Register</h2>
+        <form action="{{ url_for('register_patient') }}" method="POST">
+    <input type="text" name="fullname" placeholder="Full Name" required autocomplete="off">
+
+    <input type="text" name="username" placeholder="Username" required autocomplete="off"
+           pattern="[A-Za-z0-9]{3,15}" title="Username should be 3-15 characters long and contain only letters and numbers.">
+
+    <input type="email" name="email" placeholder="Email" required autocomplete="off">
+    <p style="color: red;">{{ email_error }}</p>  <!-- Display email errors -->
+
+    <input type="password" name="password" placeholder="Password" required
+           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+           title="Password must be at least 6 characters long and contain at least one letter and one number.">
+
+    <input type="number" name="age" placeholder="Age" required min="1" max="120"
+           title="Please enter a valid age between 1 and 120.">
+
+
+    <input type="tel" id="phone" name="phone" placeholder="Enter 10-digit phone number" required
+          pattern="[0-9]{10}" title="Phone number must be exactly 10 digits.">
+
+
+    <select name="gender" required>
+        <option value="" disabled selected>Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <button type="submit">Register</button>
+</form>
+
+
+        <p class="login-link">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+    </div>
+</body>
+</html>
