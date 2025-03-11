@@ -1,0 +1,49 @@
+# Flask and Web Framework Dependencies
+Flask==3.0.0
+Flask-SQLAlchemy==3.0.5
+Flask-Migrate==4.0.5
+Flask-Login==0.6.3
+Flask-Mail==0.9.1
+Flask-CORS==4.0.0  # If handling CORS requests
+
+# Database (SQLite / MySQL / PostgreSQL)
+sqlite3  # If using SQLite (Built-in, so not needed for pip)
+mysql-connector-python==8.1.0  # If using MySQL
+psycopg2-binary==2.9.9  # If using PostgreSQL
+SQLAlchemy==2.0.23
+
+# Security and Authentication
+Werkzeug==3.0.1
+bcrypt==4.1.2
+
+# Image Processing and Machine Learning
+tensorflow==2.14.0
+keras==2.14.0
+numpy==1.26.0
+pillow==10.0.1
+opencv-python==4.8.1.78
+scikit-learn==1.3.0
+matplotlib==3.8.0
+
+# Twilio (Video Calling & Messaging)
+twilio==8.4.0
+
+# Email Sending Libraries
+yagmail==0.15.293
+smtplib  # Built-in, no need to install via pip
+email  # Built-in, no need to install via pip
+
+# AI & OpenAI API (If using ChatGPT-like features)
+openai==1.2.4
+google-generativeai==0.3.0  # If using Google's AI services
+
+# File Handling and Uploads
+python-dotenv==1.0.0  # For managing environment variables
+requests==2.31.0  # For API calls
+werkzeug==3.0.1  # Secure file uploads
+
+# Regex and General Utilities
+re  # Built-in, no need to install via pip
+io  # Built-in, no need to install via pip
+datetime  # Built-in, no need to install via pip
+threading  # Built-in, no need to install via pip
